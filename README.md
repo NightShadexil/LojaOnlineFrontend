@@ -1,74 +1,83 @@
-# React + TypeScript + Vite
+🦙 Lhama Atómica - E-Commerce Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bem-vindo ao repositório da Lhama Atómica, uma loja online moderna desenvolvida em React, focada em performance, design responsivo e uma experiência de utilizador fluida.
 
-Currently, two official plugins are available:
+🚀 Funcionalidades Principais
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Catálogo Dinâmico e Matriz Estável
 
-## React Compiler
+Grelha de 4 Colunas: Implementação de uma matriz de produtos rigorosa utilizando CSS Grid, garantindo que em ecrãs desktop sejam sempre exibidos 4 produtos por linha sem desalinhamentos.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Filtro por Categorias: Navegação intuitiva entre diferentes tipos de produtos com atualização instantânea da grelha.
 
-## Expanding the ESLint configuration
+Responsividade Total: Layout adaptável para tablets (3 colunas) e smartphones (1 ou 2 colunas).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. Gestão de Carrinho Profissional
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Layout de Duas Colunas: Lista de itens à esquerda e resumo financeiro à direita.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Resumo Sticky: A área de totalizadores e finalização de compra permanece visível (fixa no topo direito) mesmo durante o scroll de listas longas de compras.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Persistência de Dados: Integração com localStorage para garantir que o utilizador não perde os seus produtos ao atualizar a página.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. Sistema de Temas Dinâmicos (Multi-Theme)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Três Modos Visuais:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-"# LojaOnlineFrontend" 
+🔵 Marítimo: Azul marinho profundo e fundos suaves.
+
+🌸 Pink Sakura: Tons rosados elegantes.
+
+🌑 Dark Mode: Interface de alto contraste para uso noturno (Deep Slate).
+
+Troca em Tempo Real: Botão de paleta na Navbar que alterna instantaneamente entre temas sem recarregar a página.
+
+Otimização de Contraste: Garantia de legibilidade em todos os cartões e áreas de texto, independentemente do fundo selecionado.
+
+4. Estabilidade Visual (Zero-Jitter)
+
+Fixed Scrollbar: Utilização de scrollbar-gutter: stable e CSS crítico no index.html para impedir que a Navbar e o conteúdo "saltitem" lateralmente ao navegar entre páginas de diferentes tamanhos.
+
+Favicon e Branding: Integração do logótipo da Lhama Atómica na aba do navegador e na identidade visual da aplicação.
+
+🛠️ Tecnologias Utilizadas
+
+React (Vite)
+
+TypeScript (com Verbatim Module Syntax para maior segurança de tipos)
+
+Material UI (MUI) (Sistema de temas e componentes base)
+
+React Router Dom (Gestão de rotas)
+
+Context API (Gestão de estado global do carrinho)
+
+CSS Grid & Flexbox (Estruturação de layout estável)
+
+📦 Instalação e Execução
+
+Clonar o repositório:
+git clone https://github.com/NightShadexil/LojaOnlineFrontend
+
+Instalar dependências:
+npm install
+
+Executar em modo de desenvolvimento:
+npm run dev
+
+Build para produção:
+npm run build
+
+📂 Estrutura de Pastas Relevante
+
+/public: Contém o ícone oficial da loja e assets estáticos.
+
+/src/components: Componentes reutilizáveis (Navbar, ProductCard, etc).
+
+/src/pages: Páginas principais (Home, Detalhes, Carrinho).
+
+/src/context: Lógica de estado do carrinho.
+
+/src/theme.ts: Definição dos três temas MUI.
+
+Nota Final: Este projeto foi desenvolvido com foco no detalhe visual, garantindo que elementos como a barra de scroll ou a troca de cores não afetem a estabilidade do layout, proporcionando uma experiência de compra premium.
