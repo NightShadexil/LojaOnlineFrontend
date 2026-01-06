@@ -8,17 +8,18 @@ import CartPage from "./pages/CartPage";
 import { maritimeTheme, pinkTheme, darkTheme } from './theme';
 
 const App: React.FC = () => {
-  const [themeIndex, setThemeIndex] = useState(0);
+  // Inicializa o estado com o valor guardado ou 0 (Marítimo) 
+  const [themeIndex, setThemeIndex] = useState(() => {
+    const savedTheme = localStorage.getItem("lhama-theme-index");
+    return savedTheme ? parseInt(savedTheme, 10) : 0;
+  });
+
   const themes = [maritimeTheme, pinkTheme, darkTheme];
 
+  // Grava a preferência sempre que o tema muda 
   useEffect(() => {
-    const link: HTMLLinkElement = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/png';
-    link.rel = 'shortcut icon';
-    link.href = '/Lhama_Atómica_icone.png';
-    document.getElementsByTagName('head')[0].appendChild(link);
-    document.documentElement.style.overflowY = 'scroll';
-  }, []);
+    localStorage.setItem("lhama-theme-index", themeIndex.toString());
+  }, [themeIndex]);
 
   const handleThemeChange = () => {
     setThemeIndex((prevIndex) => (prevIndex + 1) % themes.length);
@@ -27,15 +28,8 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={themes[themeIndex]}>
       <CssBaseline />
-
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        width: '100%'
-      }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}>
         <Navbar onThemeChange={handleThemeChange} />
-
         <Box component="main" sx={{ flexGrow: 1 }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
