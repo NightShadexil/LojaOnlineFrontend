@@ -1,75 +1,67 @@
 import { createTheme } from "@mui/material/styles";
 
-const theme = createTheme({
-    palette: {
-        mode: "light",
-        primary: {
-            main: "#2563eb", // Azul moderno para botões de ação
-            dark: "#1e40af",
-            light: "#60a5fa",
-        },
-        secondary: {
-            main: "#f59e0b", // Amarelo/Laranja para badges ou promoções
-        },
-        background: {
-            default: "#f8fafc", // Fundo cinza muito claro para destacar os cards brancos
-            paper: "#ffffff",
-        },
-        text: {
-            primary: "#1e293b",
-            secondary: "#64748b",
-        },
-    },
-    typography: {
-        fontFamily: "'Inter', 'system-ui', '-apple-system', sans-serif",
-        h4: {
-            fontWeight: 700,
-            letterSpacing: "-0.02em",
-        },
-        h6: {
-            fontWeight: 600,
-        },
-        button: {
-            textTransform: "none", // Botões com texto natural, mais moderno que tudo em maiúsculas
-            fontWeight: 600,
-        },
-    },
-    shape: {
-        borderRadius: 12, // Bordas mais arredondadas para um aspeto amigável 
-    },
+const sharedStyles = {
+    shape: { borderRadius: 12 },
     components: {
         MuiButton: {
             styleOverrides: {
-                root: {
-                    padding: "8px 20px",
-                    boxShadow: "none",
-                    "&:hover": {
-                        boxShadow: "0px 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                    },
-                },
+                root: { padding: "8px 20px", boxShadow: "none", textTransform: "none" as const, fontWeight: 600 },
             },
         },
         MuiPaper: {
-            defaultProps: {
-                elevation: 0,
-            },
+            defaultProps: { elevation: 0 },
             styleOverrides: {
                 root: {
-                    border: "1px solid #e2e8f0", // Borda subtil em vez de sombras pesadas
-                },
+                    border: "1px solid",
+                    borderColor: "divider",
+                    // Removida qualquer cor fixa para deixar o tema atuar
+                }
             },
         },
         MuiCard: {
             styleOverrides: {
                 root: {
                     transition: "transform 0.2s ease-in-out",
-                    "&:hover": {
-                        transform: "translateY(-4px)", // Efeito visual ao passar o rato 
-                    },
+                    "&:hover": { transform: "translateY(-4px)" }
                 },
             },
         },
     },
+};
+
+export const maritimeTheme = createTheme({
+    ...sharedStyles,
+    palette: {
+        mode: "light",
+        primary: { main: "#003049" },
+        background: { default: "#e3f2fd", paper: "#ffffff" },
+        text: { primary: "#003049", secondary: "#455a64" },
+    },
 });
 
-export default theme;
+export const pinkTheme = createTheme({
+    ...sharedStyles,
+    palette: {
+        mode: "light",
+        primary: { main: "#ad1457" },
+        background: { default: "#fce4ec", paper: "#ffffff" },
+        text: { primary: "#ad1457", secondary: "#880e4f" },
+    },
+});
+
+export const darkTheme = createTheme({
+    ...sharedStyles,
+    palette: {
+        mode: "dark",
+        primary: { main: "#38bdf8" },
+        background: {
+            default: "#0f172a", // Fundo do ecrã quase preto
+            paper: "#1e293b"    // Cor dos cartões (Azul Ardósia Escuro)
+        },
+        text: {
+            primary: "#f8fafc",   // Texto Branco Gelo (Leitura perfeita)
+            secondary: "#94a3b8"  // Texto Cinza para rótulos secundários
+        },
+        divider: "rgba(255, 255, 255, 0.12)",
+    },
+});

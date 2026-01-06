@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Chip, Typography, Skeleton } from "@mui/material";
+import { Box, Chip, Skeleton } from "@mui/material";
 import { api } from "../services/api";
 
 interface FiltroCategoriasProps {
@@ -24,28 +24,23 @@ const FiltroCategorias: React.FC<FiltroCategoriasProps> = ({ categoriaSelecionad
     );
 
     return (
-        <Box sx={{ mb: 4 }}>
-            <Typography variant="subtitle2" gutterBottom color="text.secondary">
-                Filtrar por Categoria
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 3 }}>
+            <Chip
+                label="Todos"
+                clickable
+                color={categoriaSelecionada === "" ? "primary" : "default"}
+                onClick={() => onSelectCategoria("")}
+            />
+            {categorias.map((cat) => (
                 <Chip
-                    label="Todos"
+                    key={cat}
+                    label={cat}
                     clickable
-                    color={categoriaSelecionada === "" ? "primary" : "default"}
-                    onClick={() => onSelectCategoria("")}
+                    sx={{ textTransform: 'capitalize' }}
+                    color={categoriaSelecionada === cat ? "primary" : "default"}
+                    onClick={() => onSelectCategoria(cat)}
                 />
-                {categorias.map((cat) => (
-                    <Chip
-                        key={cat}
-                        label={cat}
-                        clickable
-                        sx={{ textTransform: 'capitalize' }}
-                        color={categoriaSelecionada === cat ? "primary" : "default"}
-                        onClick={() => onSelectCategoria(cat)}
-                    />
-                ))}
-            </Box>
+            ))}
         </Box>
     );
 };

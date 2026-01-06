@@ -1,67 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grid, CircularProgress, Typography, Box, Alert } from "@mui/material";
+import { Grid, Box, TextField, Typography, Container } from "@mui/material";
+import FiltroCategorias from "../components/FiltroCategorias";
 import { api } from "../services/api";
 import type { Produto } from "../types";
 import ProductCard from "../components/ProductCard";
-import FiltroCategorias from "../components/FiltroCategorias";
 
 const HomePage: React.FC = () => {
-    const [produtos, setProdutos] = useState<Produto[]>([]);
-    const [categoriaAtiva, setCategoriaAtiva] = useState<string>("");
-    const [loading, setLoading] = useState<boolean>(true);
-    const [erro, setErro] = useState<string | null>(null);
+    const [products, setProducts] = useState<Produto[]>([]);
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        const carregarProdutos = async () => {
+        const fetchProducts = async () => {
             try {
-                setLoading(true);
                 const data = await api.getProducts();
-                setProdutos(data);
-            } catch (err) {
-                setErro("Não foi possível carregar os produtos.");
-            } finally {
-                setLoading(false);
+                setProducts(data);
+            } catch (error) {
+                console.error("Erro ao carregar produtos:", error);
             }
         };
-        carregarProdutos();
+
+        fetchProducts();
     }, []);
 
-    // Lógica de filtragem no cliente
-    const produtosFiltrados = categoriaAtiva
-        ? produtos.filter(p => p.category === categoriaAtiva)
-        : produtos;
-
-    if (loading) return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-            <CircularProgress />
-        </Box>
-    );
+    const filteredProducts = products.filter((product) => {
+        const matchesCategory = categoriaSelecionada === "" || product.category === categoriaSelecionada;
+        const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.description.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
 
     return (
-        <Container sx={{ py: 4 }}>
-            <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>Nossa Loja</Typography>
-
-            {/* Componente de Filtro  */}
-            <FiltroCategorias
-                categoriaSelecionada={categoriaAtiva}
-                onSelectCategoria={setCategoriaAtiva}
-            />
-
-            {erro && <Alert severity="error">{erro}</Alert>}
-
-            <Grid container spacing={3}>
-                {produtosFiltrados.map((produto) => (
-                    <Grid item key={produto.id} xs={12} sm={6} md={4} lg={3}>
-                        <ProductCard produto={produto} />
+        <Container maxWidth={false} sx={{ py: 2, px: 2 }}>
+            <Box sx={{ maxWidth: 1200, margin: '0 auto', mb: 4 }}>
+                <Typography variant="subtitle2" gutterBottom color="text.secondary" sx={{ mb: 1 }}>
+                    Pesquisar por nome ou descrição
+                </Typography>
+                <TextField
+                    fullWidth
+                    variant="outlined"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    sx={{ mb: 2 }}
+                />
+                <Typography variant="subtitle2" gutterBottom color="text.secondary" sx={{ mb: 1 }}>
+                    Filtrar por Categoria
+                </Typography>
+                <FiltroCategorias
+                    categoriaSelecionada={categoriaSelecionada}
+                    onSelectCategoria={setCategoriaSelecionada}
+                />
+            </Box>
+            <Grid container spacing={3} sx={{ maxWidth: 1200, margin: '0 auto' }}>
+                {filteredProducts.map((product) => (
+                    <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                        <ProductCard produto={product} />
                     </Grid>
                 ))}
             </Grid>
-
-            {produtosFiltrados.length === 0 && !loading && (
-                <Typography sx={{ mt: 4, textAlign: 'center' }}>
-                    Nenhum produto encontrado nesta categoria.
-                </Typography>
-            )}
         </Container>
     );
 };

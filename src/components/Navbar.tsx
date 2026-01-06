@@ -1,46 +1,40 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Button, Badge, IconButton, Container } from "@mui/material";
+import { AppBar, Toolbar, Box, Typography, Button, Badge, IconButton, Container } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import PaletteIcon from "@mui/icons-material/PaletteOutlined"; 
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import logoIcon from "../assets/Lhama_Atómica_icone.png"; 
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+    onThemeChange: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onThemeChange }) => {
     const { cart } = useCart();
-
-    // Calcular o total de itens (quantidade somada)
     const itemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
-        <AppBar position="sticky" color="default" sx={{ mb: 4, backgroundColor: 'white' }}>
+        <AppBar position="sticky" color="inherit" elevation={1} sx={{ borderBottom: '1px solid', borderColor: 'divider', py: 1 }}>
             <Container maxWidth="lg">
-                <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 0 } }}>
-                    {/* Logótipo / Nome da Loja */}
-                    <Typography
-                        variant="h6"
-                        component={Link}
-                        to="/"
-                        sx={{
-                            textDecoration: 'none',
-                            color: 'primary.main',
-                            fontWeight: 800,
-                            letterSpacing: '-0.5px'
-                        }}
-                    >
-                        TECH STORE
-                    </Typography>
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                    <Box component={Link} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 1, textDecoration: 'none' }}>
+                        <img src={logoIcon} alt="Lhama Logo" style={{ height: '40px', width: '40px' }} />
+                        <Typography variant="h5" sx={{ color: 'primary.main', fontWeight: 900, letterSpacing: '-1px' }}>
+                            LHAMA ATÓMICA
+                        </Typography>
+                    </Box>
 
-                    {/* Ações da Direita */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Button component={Link} to="/" color="inherit">
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Button component={Link} to="/" color="inherit" sx={{ display: { xs: 'none', sm: 'block' }, fontWeight: 600 }}>
                             Produtos
                         </Button>
 
-                        <IconButton
-                            component={Link}
-                            to="/cart"
-                            color="primary"
-                            aria-label="carrinho"
-                        >
+                        <IconButton onClick={onThemeChange} color="primary" title="Trocar Cores" size="small">
+                            <PaletteIcon fontSize="small" />
+                        </IconButton>
+
+                        <IconButton component={Link} to="/cart" color="primary">
                             <Badge badgeContent={itemCount} color="error">
                                 <ShoppingCartIcon />
                             </Badge>
@@ -51,8 +45,5 @@ const Navbar: React.FC = () => {
         </AppBar>
     );
 };
-
-// Importação necessária para o Box no código acima
-import { Box } from "@mui/material";
 
 export default Navbar;
