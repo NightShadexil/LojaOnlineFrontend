@@ -34,7 +34,7 @@ const CartPage: React.FC = () => {
                                     alignItems: 'center',
                                     p: 2,
                                     mb: 2,
-                                    bgcolor: 'background.paper', // Dinâmico: branco no light, escuro no dark
+                                    bgcolor: 'background.paper',
                                     borderColor: 'divider'
                                 }}
                             >
@@ -54,14 +54,14 @@ const CartPage: React.FC = () => {
                         ))}
                     </Box>
 
-                    {/* Resumo do Pedido - Lado Superior Direito */}
+                    {/* Resumo do Carrinho */}
                     <Paper
                         variant="outlined"
                         sx={{
                             width: { xs: '100%', md: 350 },
                             p: 3,
-                            bgcolor: 'background.paper', // Deixa de ser #f9f9f9 fixo
-                            color: 'text.primary',       // Garante que o texto segue o tema
+                            bgcolor: 'background.paper', 
+                            color: 'text.primary',       
                             borderRadius: 2,
                             position: 'sticky',
                             top: 100,
@@ -93,7 +93,7 @@ const CartPage: React.FC = () => {
                         <Button
                             variant="contained"
                             fullWidth
-                            color="success" // Usa a cor de sucesso do tema em vez de azul fixo
+                            color="success"
                             size="large"
                             sx={{ fontWeight: 700 }}
                         >

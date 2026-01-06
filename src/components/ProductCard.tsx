@@ -13,8 +13,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ produto }) => {
 
     return (
         <Card className="product-card" sx={{
-            width: 280,   // Largura fixa rigorosa
-            height: 420,  // Altura fixa rigorosa
+            width: 280,   
+            height: 420,  
             display: 'flex',
             flexDirection: 'column',
             '&:hover': {

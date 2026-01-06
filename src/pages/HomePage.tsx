@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Box, TextField, Typography, Container } from "@mui/material";
+import { Box, TextField, Typography, Container } from "@mui/material";
+import Grid from '@mui/material/Grid';
 import FiltroCategorias from "../components/FiltroCategorias";
 import { api } from "../services/api";
 import type { Produto } from "../types";
@@ -19,7 +20,6 @@ const HomePage: React.FC = () => {
                 console.error("Erro ao carregar produtos:", error);
             }
         };
-
         fetchProducts();
     }, []);
 
@@ -51,9 +51,35 @@ const HomePage: React.FC = () => {
                     onSelectCategoria={setCategoriaSelecionada}
                 />
             </Box>
-            <Grid container spacing={3} sx={{ maxWidth: 1200, margin: '0 auto' }}>
+
+            <Grid
+                container
+                spacing={3}
+                sx={{
+                    maxWidth: 1200,
+                    margin: '0 auto',
+                    width: '100%',
+                    justifyContent: {
+                        xs: 'center', // < 600px: Esquerda
+                        sm: 'center',     // 600px - 900px: Centro
+                        md: 'center',     // 900px - 1200px: Centro
+                        lg: 'flex-start'  // > 1200px: Esquerda
+                    }
+                }}
+            >
                 {filteredProducts.map((product) => (
-                    <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+                    <Grid
+                        item
+                        key={product.id}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        lg={3}
+                        sx={{
+                            display: 'flex',
+                            justifyContent: { xs: 'center', sm: 'flex-start' },
+                        }}
+                    >
                         <ProductCard produto={product} />
                     </Grid>
                 ))}
