@@ -59,22 +59,13 @@ const HomePage: React.FC = () => {
                     maxWidth: 1200,
                     margin: '0 auto',
                     width: '100%',
-                    justifyContent: {
-                        xs: 'center', // < 600px: Esquerda
-                        sm: 'center',     // 600px - 900px: Centro
-                        md: 'center',     // 900px - 1200px: Centro
-                        lg: 'flex-start'  // > 1200px: Esquerda
-                    }
+                    justifyContent: 'center'
                 }}
             >
                 {filteredProducts.map((product) => (
                     <Grid
-                        item
                         key={product.id}
-                        xs={12}
-                        sm={6}
-                        md={4}
-                        lg={3}
+                        size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
                         sx={{
                             display: 'flex',
                             justifyContent: { xs: 'center', sm: 'flex-start' },

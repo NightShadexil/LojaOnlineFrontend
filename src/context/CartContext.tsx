@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import type { CartItem, Produto } from '../types';
 
@@ -7,6 +7,7 @@ interface CartContextType {
     addToCart: (product: Produto) => void;
     removeFromCart: (id: number) => void;
     updateQuantity: (id: number, qty: number) => void;
+    clearCart: () => void;
     total: number;
 }
 
@@ -18,11 +19,16 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return saved ? JSON.parse(saved) : [];
     });
 
+    // Sincroniza com localStorage quando o carrinho muda
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
+        if (cart.length === 0) {
+            localStorage.removeItem('cart');
+        } else {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
     }, [cart]);
 
-    const addToCart = (product: Produto) => {
+    const addToCart = useCallback((product: Produto) => {
         setCart(prev => {
             const exists = prev.find(item => item.id === product.id);
             if (exists) {
@@ -31,21 +37,32 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             }
             return [...prev, { ...product, quantity: 1 }];
         });
-    };
+    }, []);
 
-    const removeFromCart = (id: number) => {
+    const removeFromCart = useCallback((id: number) => {
         setCart(prev => prev.filter(item => item.id !== id));
-    };
+    }, []);
 
-    const updateQuantity = (id: number, qty: number) => {
+    const updateQuantity = useCallback((id: number, qty: number) => {
         if (qty < 1) return;
         setCart(prev => prev.map(item => item.id === id ? { ...item, quantity: qty } : item));
-    };
+    }, []);
+
+    const clearCart = useCallback(() => {
+        setCart([]);
+    }, []);
 
     const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, total }}>
+        <CartContext.Provider value={{
+            cart,
+            addToCart,
+            removeFromCart,
+            updateQuantity,
+            clearCart,
+            total
+        }}>
             {children}
         </CartContext.Provider>
     );

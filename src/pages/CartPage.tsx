@@ -1,11 +1,13 @@
 import React from "react";
 import { Box, Button, Typography, Divider, IconButton, Container, Paper } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 const CartPage: React.FC = () => {
-    const { cart, removeFromCart } = useCart();
+    const { cart, removeFromCart, updateQuantity } = useCart();
 
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const total = subtotal;
@@ -35,18 +37,57 @@ const CartPage: React.FC = () => {
                                     p: 2,
                                     mb: 2,
                                     bgcolor: 'background.paper',
-                                    borderColor: 'divider'
+                                    borderColor: 'divider',
+                                    gap: 2 // Espaçamento consistente entre elementos
                                 }}
                             >
+                                {/* Imagem do Produto */}
                                 <Box sx={{ width: 80, height: 80, flexShrink: 0, bgcolor: 'white', borderRadius: 1, p: 0.5 }}>
                                     <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                                 </Box>
-                                <Typography sx={{ flex: 1, mx: 2, fontWeight: 600, color: 'text.primary' }}>
+
+                                {/* Título */}
+                                <Typography sx={{ flex: 1, fontWeight: 600, color: 'text.primary' }}>
                                     {item.title}
                                 </Typography>
-                                <Typography sx={{ mx: 2, fontWeight: 700, color: 'text.primary' }}>
-                                    {item.price.toFixed(2)}€
+
+                                {/* Seletores de Quantidade Profissionais */}
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    border: '1px solid',
+                                    borderColor: 'divider',
+                                    borderRadius: 2,
+                                    overflow: 'hidden',
+                                    bgcolor: 'action.hover'
+                                }}>
+                                    <IconButton
+                                        size="small"
+                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                        sx={{ borderRadius: 0 }}
+                                    >
+                                        <RemoveIcon fontSize="small" />
+                                    </IconButton>
+
+                                    <Typography sx={{ px: 2, fontWeight: 700, minWidth: '30px', textAlign: 'center' }}>
+                                        {item.quantity}
+                                    </Typography>
+
+                                    <IconButton
+                                        size="small"
+                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                        sx={{ borderRadius: 0 }}
+                                    >
+                                        <AddIcon fontSize="small" />
+                                    </IconButton>
+                                </Box>
+
+                                {/* Preço Total do Item (Preço x Quantidade) */}
+                                <Typography sx={{ minWidth: 80, textAlign: 'right', fontWeight: 700, color: 'text.primary' }}>
+                                    {(item.price * item.quantity).toFixed(2)}€
                                 </Typography>
+
+                                {/* Botão de Remover */}
                                 <IconButton color="error" onClick={() => removeFromCart(item.id)}>
                                     <DeleteIcon />
                                 </IconButton>
@@ -95,6 +136,8 @@ const CartPage: React.FC = () => {
                             fullWidth
                             color="success"
                             size="large"
+                            component={Link}
+                            to="/success"
                             sx={{ fontWeight: 700 }}
                         >
                             Finalizar Compra
