@@ -2,82 +2,56 @@
 
 Bem-vindo ao repositório da Lhama Atómica, uma loja online moderna desenvolvida em React, focada em performance, design responsivo e uma experiência de utilizador fluida.
 
-🚀 Funcionalidades Principais
+🚀 Funcionalidades de Destaque
 
-1. Catálogo Dinâmico e Matriz Estável
+1. Experiência de Checkout Imersiva (Color Run Animation)
+- Efeito Visual Dinâmico: Ao finalizar uma compra, o utilizador é recebido com uma animação de "explosão de pó colorido", simulando uma Color Run.
+- Engine de Partículas CSS: Utilização de keyframes dinâmicos e radial-gradients gerados aleatoriamente via React para criar uma atmosfera de celebração única a cada acesso.
+- Glassmorphism: O cartão de sucesso utiliza backdropFilter: 'blur(20px)', permitindo que as explosões de cor brilhem suavemente através da interface.
 
-Grelha de 4 Colunas: Implementação de uma matriz de produtos rigorosa utilizando CSS Grid, garantindo que em ecrãs desktop sejam sempre exibidos 4 produtos por linha sem desalinhamentos.
+2. Gestão de Estado Otimizada (Zero-Loop Context)
+- CartContext Estável: Implementação de useCallback em todas as funções globais (addToCart, clearCart, etc.), eliminando re-renderizações desnecessárias e garantindo a estabilidade das páginas dependentes.
+- Persistência Inteligente: Sincronização automática com o localStorage para manter o carrinho ativo entre sessões.
 
-Filtro por Categorias: Navegação intuitiva entre diferentes tipos de produtos com atualização instantânea da grelha.
+3. Matriz de Produtos e Layout de Alta Precisão
+- Grelha 4-Column Stable: Implementação rigorosa de CSS Grid que mantém 4 produtos por linha em desktop, adaptando-se para 3 em tablets e 1-2 em mobile sem qualquer desalinhamento.
+- Interface Sticky: O resumo do carrinho e botões de ação permanecem fixos durante o scroll, facilitando a conversão e finalização da compra.
 
-Responsividade Total: Layout adaptável para tablets (3 colunas) e smartphones (1 ou 2 colunas).
+4. Sistema de Temas Dinâmicos (Multi-Theme Engine)
+- 🔵 Marítimo: Elegância clássica com tons de azul marinho profundo.
+- 🌸 Pink Sakura: Design suave e estético inspirado na primavera.
+- 🌑 Dark Mode (Deep Slate): Interface otimizada para ambientes de baixa luminosidade, focada no conforto visual.
+- Troca Hot-Swap: Alternância instantânea de temas via Context API sem necessidade de recarregar a aplicação.
 
-2. Gestão de Carrinho Profissional
+5. Estabilidade Visual (Anti-Jitter)
+S- crollbar Gutter: Utilização de scrollbar-gutter: stable para prevenir o "salto" lateral do conteúdo quando o utilizador navega entre páginas de diferentes comprimentos.
 
-Layout de Duas Colunas: Lista de itens à esquerda e resumo financeiro à direita.
-
-Resumo Sticky: A área de totalizadores e finalização de compra permanece visível (fixa no topo direito) mesmo durante o scroll de listas longas de compras.
-
-Persistência de Dados: Integração com localStorage para garantir que o utilizador não perde os seus produtos ao atualizar a página.
-
-3. Sistema de Temas Dinâmicos (Multi-Theme)
-
-Três Modos Visuais:
-
-🔵 Marítimo: Azul marinho profundo e fundos suaves.
-
-🌸 Pink Sakura: Tons rosados elegantes.
-
-🌑 Dark Mode: Interface de alto contraste para uso noturno (Deep Slate).
-
-Troca em Tempo Real: Botão de paleta na Navbar que alterna instantaneamente entre temas sem recarregar a página.
-
-Otimização de Contraste: Garantia de legibilidade em todos os cartões e áreas de texto, independentemente do fundo selecionado.
-
-4. Estabilidade Visual (Zero-Jitter)
-
-Fixed Scrollbar: Utilização de scrollbar-gutter: stable e CSS crítico no index.html para impedir que a Navbar e o conteúdo "saltitem" lateralmente ao navegar entre páginas de diferentes tamanhos.
-
-Favicon e Branding: Integração do logótipo da Lhama Atómica na aba do navegador e na identidade visual da aplicação.
-
-🛠️ Tecnologias Utilizadas
-
-React (Vite)
-
-TypeScript (com Verbatim Module Syntax para maior segurança de tipos)
-
-Material UI (MUI) (Sistema de temas e componentes base)
-
-React Router Dom (Gestão de rotas)
-
-Context API (Gestão de estado global do carrinho)
-
-CSS Grid & Flexbox (Estruturação de layout estável)
+🛠️ Stack Tecnológica
+- Core: React 18 com Vite
+- Linguagem: TypeScript (Verbatim Module Syntax)
+- UI Framework: Material UI (MUI)
+- Routing: React Router Dom v6
+- State Management: React Context API & Hooks (useCallback, useMemo, useEffect)
 
 📦 Instalação e Execução
 
-Clonar o repositório:
+- Clonar o repositório:
 git clone https://github.com/NightShadexil/LojaOnlineFrontend
 
-Instalar dependências:
+- Instalar dependências:
 npm install
 
-Executar em modo de desenvolvimento:
+- Executar em modo de desenvolvimento:
 npm run dev
 
-Build para produção:
+- Build para produção:
 npm run build
 
 📂 Estrutura de Pastas Relevante
+- /public: Contém o ícone oficial da loja e assets estáticos.
+- /src/components: Componentes reutilizáveis (Navbar, ProductCard, etc).
+- /src/pages: Páginas principais (Home, Detalhes, Carrinho).
+- /src/context: Lógica de estado do carrinho.
+- /src/theme.ts: Definição dos três temas MUI.
 
-/public: Contém o ícone oficial da loja e assets estáticos.
-
-/src/components: Componentes reutilizáveis (Navbar, ProductCard, etc).
-
-/src/pages: Páginas principais (Home, Detalhes, Carrinho).
-
-/src/context: Lógica de estado do carrinho.
-
-/src/theme.ts: Definição dos três temas MUI.
-
-Nota Final: Este projeto foi desenvolvido com foco no detalhe visual, garantindo que elementos como a barra de scroll ou a troca de cores não afetem a estabilidade do layout, proporcionando uma experiência de compra premium.
+Nota Final: A Lhama Atómica não é apenas uma loja, é um estudo sobre como a estabilidade técnica — impulsionada pelo TypeScript e Hooks bem geridos — pode coexistir com animações vibrantes e design experimental. Este projeto foi desenvolvido com um foco rigoroso no detalhe visual, garantindo que elementos como a barra de scroll ou a troca dinâmica de cores não afetem a estabilidade do layout, proporcionando assim uma experiência de compra premium e fluida.

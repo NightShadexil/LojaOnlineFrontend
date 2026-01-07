@@ -4,7 +4,6 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-// Importamos o ícone da pasta public (o caminho no Vite é relativo à raiz da public)
 import logoIcon from "/Lhama_Atómica_icone.png";
 
 interface NavbarProps {
